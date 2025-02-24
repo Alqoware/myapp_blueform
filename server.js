@@ -40,7 +40,13 @@ app.get("/api/data", (req, res) => {
     res.json(storedData);
 });
 
+app.post("/api/update", (req, res) => {
+    console.log(req.body);
+    storedData.push(req.body);
+});
+
 // Start server
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+
