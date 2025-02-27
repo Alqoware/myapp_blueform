@@ -1,0 +1,36 @@
+
+function getChatMessages() {
+    let messages = [];
+    document.querySelectorAll(".message-header").forEach((msg) => {
+        let authorElem = msg.querySelector(".message-author .name");
+        let dateElem = msg.querySelector(".message-date");
+        let textElem = msg.nextElementSibling;
+
+        if (!authorElem || !dateElem) return; // Prevent errors if elements are missing
+
+        let author = authorElem.textContent.trim();
+        let date = dateElem.textContent.trim();
+        let text = textElem ? textElem.textContent.trim() : "";
+
+        messages.push({ author, date, text });
+    });
+    return messages;
+}
+function sendToMake() {
+    let chatMessages = getChatMessages();
+
+    fetch("https://hook.eu2.make.com/wl96cnndbreb98wlgacan8x5yq4ili83", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: chatMessages })
+    })
+    .then(response => {
+        return response.text(); // Read response as text instead of JSON
+    })
+    .then(data => {
+        console.log("Response from Make.com:", data); // Should log "Accepted"
+    })
+    .catch(error => console.error("Error:", error));
+}
+
+sendToMake(); // Run when the page loads

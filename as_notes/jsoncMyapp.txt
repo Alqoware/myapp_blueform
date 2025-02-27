@@ -1,0 +1,55 @@
+{
+  "name": "My Custom API App",
+  "version": "1.0",
+  "description": "An app that receives webhook data and sends it to my website API.",
+  "type": "app",
+  "authentication": {
+    "type": "apiKey",
+    "name": "API Key",
+    "keyPlacement": "header",
+    "keyParamName": "Authorization",
+    "valueFormat": "Bearer {apiKey}"
+  },
+  "modules": [
+    {
+      "name": "Receive Webhook and Send Data",
+      "description": "Receives data and forwards it to the website API.",
+      "type": "action",
+      "input": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "string",
+              "title": "Webhook Data",
+              "description": "The data received from the webhook."
+            }
+          }
+        }
+      },
+      "output": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "response": {
+              "type": "string",
+              "title": "Response",
+              "description": "The response from the website API."
+            }
+          }
+        }
+      },
+      "execute": {
+        "url": "https://yourwebsite.com/api/receive-data",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "{authentication.apiKey}"
+        },
+        "body": "{input.data}"
+      }
+    }
+  ]
+}
+
+

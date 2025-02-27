@@ -1,0 +1,17 @@
+{
+	"url": "https://myapp-blueform.onrender.com/api/data",
+	"method": "POST",
+	"headers": {
+		"Content-Type": "application/json",
+		"Authorization": "Bearer {{config.apiKey}}"
+	},
+
+"body": "{ \"author\": \"{input.author}\", \"date\": \"{input.date}\", \"time\": \"{input.time}\" }"
+,
+	"response": {
+		"output": "{{response.body}}"
+
+	}
+
+
+}

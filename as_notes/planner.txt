@@ -1,0 +1,77 @@
+
+znajdz darmowy hosting / obojetnie jaki adres, tylko do testowania
+
+aplikacja w make (jsonc) -> zbiera dane z firmotron -> wysyła na stronę (moj darmowy hosting) 
+
+strona publiczna z api -> zrób do niej aplkację na make ->
+-> scenariusz - webhook z firmatron - przesyła na moją (aplikację) ->
+-> strona otrzymuje dane z firmotron.
+
+moja aplikacja wyświetla dane wysłane w czacie.
+
+request (author, date, time) -> response (read(3), print(3))
+request:
+The endpoint
+The method - POST
+The headers - eg. "Content-Type: application/json".
+The data (or body) - author= "", date= "", etc..
+
+git k -> render k -> deploy k -> get api key k -> make.com k ->
+ -> write jsonc custom app -> use app in scenarios
+
+
+
+/UR SERVER IS ON RENDER
+_____________________________________________
+
+const express = require('express')
+const app = express()
+const port = process.env.PORT || 4000;
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
+
+The default value of PORT is 10000 for all Render web services. You can override this value by setting the environment variable for your service in the Render Dashboard.
+_______________________________________
+make > wysyła na server.js (https://myapp-blueform.onrender.com/api/data)
+
+
+https://myapp-blueform.onrender.com/api/data
+
+curl -X POST https://myapp-blueform.onrender.com/api/data -H "Content-Type: application/json" -H "Authorization: Bearer https://myapp-blueform.onrender.com/api/data" -d "{\"author\":\"Test User\", \"date\":\"2025-02-25\", \"time\":\"12:00\"}"
+
+
+[{"author":"{input.author}","date":"{input.date}","time":"{input.time}"}]
+
+{
+	"url": "https://myapp-blueform.onrender.com/api/data",
+	"method": "POST",
+	"headers": {
+		"Content-Type": "application/json",
+		"Authorization": "Bearer {{config.apiKey}}"
+	},
+"body": "{ \"author\": \"{author}\", \"date\": \"{date}\", \"time\": \"{time}\" }",
+	"response": {
+		"output": "{{response.body}}"
+
+	}
+
+
+}
+
+_______________________________________________
+
+variables (author, date, text) get interpreted as text (input.author, input.date, etc).
+
+line suspicious for error:
+
+wrong syntax? 
+variants tried: {{input.author}}, [], ?() //chatgpt chat
+possibly, find the correct variant.
+
+"body": "{ \"author\": \"{input.author}\", \"date\": \"{input.date}\", \"text\": \"{input.text}\" }"
