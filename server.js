@@ -32,8 +32,9 @@ app.post("/api/data", (req, res) => {
     const newData = { author, date, text }; 
 
     storedData.push(newData);
-document.writeln(newData)
+
     console.log("Received Data:", newData); // Debugging log
+    console.log("Received data:", { author, date, text });
     res.status(201).json({ message: "Data received", data: newData });
 });
 
